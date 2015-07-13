@@ -7,8 +7,6 @@ module.exports = React.createClass({
     ],
     render () {
         var errorMsg = this.getErrorMsg();
-        console.log('HaHaHa');
-        console.log(errorMsg);
         return (
             <div style={this.props.style}>
                 {this.props.children}
