@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "form validation library which is modified version based on formsy-react",
   "author": "jonaswu <jonaswu@yahoo-inc.com>",
-  "main": "src/main.js",
+  "main": "lib/main.js",
   "scripts": {
     "start": "gulp start",
     "deploy": "NODE_ENV=production node_modules/.bin/webpack -p --config webpack.production.config.js"
