@@ -5,11 +5,13 @@ module.exports = {
 
   devtool: 'inline-source-map',
 
-  entry: path.resolve(__dirname, 'build', 'Test.jsx'),
+  entry: path.resolve(__dirname, 'lib', 'main.js'),
 
   output: {
-    path: path.resolve(__dirname, 'static', 'js'),
-    filename: 'main.js'
+    path: path.resolve(__dirname, 'release'),
+    filename: 'formsyEx-react.js',
+    libraryTarget: 'umd',
+    library: 'FormsyEx'
   },
 
   module: {
@@ -19,4 +21,5 @@ module.exports = {
       { test: /\.jsx$/,  loaders: ["babel-loader", "jsx-loader?harmony"], exclude: [/node_modules/]}
     ]
   }
+
 };

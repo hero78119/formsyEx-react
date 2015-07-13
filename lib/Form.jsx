@@ -1,9 +1,10 @@
 'use strict';
-var React = require('react');
+var React = require('react'),
+    _ = require('underscore');
 
 module.exports = React.createClass({
     mixins: [
-        require('./FormsyExMixin.jsx')
+        require('./Mixin.js')
     ],
     isForm: true,
     register (child) {
@@ -15,14 +16,23 @@ module.exports = React.createClass({
     unregister (child) {
         delete this.inputs[child.regId];
     },
+    submit (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        var firstErrorComponent = undefined;
+            _.each(
+                this.inputs,
+                    function (component) {
+                        firstErrorComponent = (firstErrorComponent === undefined && component.validate() === false ) ? component: firstErrorComponent;
+                    }
+                );
+        firstErrorComponent === undefined ?
+            this.props.onSubmit.apply(this, arguments) :
+            firstErrorComponent.focus && firstErrorComponent.focus();
+    },
     render () {
         return (
-            <form onSubmit={
-                function () {
-                    console.log(this.inputs);
-                    return this.props.onSubmit.apply(this, arguments)
-                }.bind(this)
-            }>
+            <form onSubmit={this.submit}>
                 {this.props.children}
             </form>
         );
