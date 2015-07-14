@@ -5,7 +5,7 @@ module.exports = React.createClass({
     mixins: [
        require('./Mixin.js')
     ],
-    render () {
+    render: function () {
         var errorMsg = this.getErrorMsg();
         return (
             <div style={this.props.style}>
