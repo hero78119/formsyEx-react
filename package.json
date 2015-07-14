@@ -1,12 +1,12 @@
 {
   "name": "formsyex-react",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "form validation library which is modified version based on formsy-react",
   "author": "jonaswu <jonaswu@yahoo-inc.com>",
   "main": "./lib/main.js",
   "repository": {
     "type": "git",
-    "url": "https://git.corp.yahoo.com/jonaswu/formsyEx-react.git"
+    "url": "https://github.com/hero78119/formsyEx-react.git"
   },
   "scripts": {
     "start": "gulp start",
