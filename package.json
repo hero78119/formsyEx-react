@@ -9,6 +9,7 @@
     "deploy": "NODE_ENV=production node_modules/.bin/webpack -p --config webpack.production.config.js"
   },
   "dependencies": {
+    "object-assign": "~3.0.0",
     "react": "*",
     "underscore": "~1.8.3",
     "underscore.string": "~3.1.1"

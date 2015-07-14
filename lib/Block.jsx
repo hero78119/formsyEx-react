@@ -3,7 +3,7 @@ var React = global.React || require('react');
 
 module.exports = React.createClass({
     mixins: [
-       require('./Mixin.js')
+       require('./Mixin')
     ],
     render: function () {
         var errorMsg = this.getErrorMsg();
