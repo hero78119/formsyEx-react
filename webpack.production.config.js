@@ -6,6 +6,7 @@ module.exports = {
   devtool: 'inline-source-map',
 
   entry: path.resolve(__dirname, 'lib', 'main.js'),
+  externals: ['react', 'underscore'],
 
   output: {
     path: path.resolve(__dirname, 'release'),
