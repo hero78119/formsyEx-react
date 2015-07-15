@@ -1,5 +1,7 @@
 'use strict';
 var React = global.React || require('react'),
-    objectAssign = require('object-assign');
-module.exports = React.createClass(objectAssign({mixins: [require('./Mixin')]}, require('./form')()));
+    form = require('./form')();
+
+form['mixins'] = [require('./Mixin')];
+module.exports = React.createClass(form);
 
