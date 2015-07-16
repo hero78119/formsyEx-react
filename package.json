@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "gulp start",
+    "test": "node testrunner.js",
     "deploy": "NODE_ENV=production node_modules/.bin/webpack -p --config webpack.production.config.js"
   },
   "dependencies": {
