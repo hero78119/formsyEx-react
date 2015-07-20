@@ -183,11 +183,11 @@ describe ('FormsyEx', function () {
              expect(_.values(form.refs.foo3.inputs).length).toEqual(1);
          })
 
-         it('should validate form when submit and terminate on first validation error', function () {
+         it('should validate form when submit', function () {
              var MockInput = Input;
              var stubInput = sinon.stub(MockInput.type.prototype.__reactAutoBindMap, "validate");
              var MockBlock = Block;
-             var stubBlock = sinon.stub(MockBlock.type.prototype.__reactAutoBindMap, "validate");
+             var stubBlockValidate = sinon.stub(MockBlock.type.prototype.__reactAutoBindMap, "validate");
              var Component = React.createClass({
                  render: function () {
                      return (
@@ -203,8 +203,82 @@ describe ('FormsyEx', function () {
                  <Component />
              );
              TestUtils.Simulate.submit(form.getDOMNode());
+             TestUtils.Simulate.click(React.findDOMNode(form).childNodes[0].childNodes[0]);
              sinon.assert.calledOnce(stubInput);
-             sinon.assert.calledOnce(stubBlock);
+             sinon.assert.calledOnce(stubBlockValidate);
+             stubBlockValidate.restore();
+             stubInput.restore();
+         })
+
+         it('should validate form when submit and focus on first validation error component', function () {
+             var MockBlock = Block;
+             var MockInput = Input;
+             var stubInput = sinon.stub(MockInput.type.prototype.__reactAutoBindMap, "validate");
+             var stubBlockValidate = sinon.stub(MockBlock.type.prototype.__reactAutoBindMap, "validate").returns(false);
+             var stubBlockFocus = sinon.stub(MockBlock.type.prototype.__reactAutoBindMap, "focus");
+             var Component = React.createClass({
+                 render: function () {
+                     return (
+                         <Form onSubmit={function () {}} ref='foo' name='foo' >
+                            <MockBlock name='block'>
+                                <MockInput regForm='foo' name='bar1' value='123'/>
+                            </MockBlock>
+                            <MockInput regForm='foo' name='bar2' value='234'/>
+                         </Form>
+                     );
+                 }
+             });
+             form = Testlib.renderJSX(
+                 <Component />
+             );
+             TestUtils.Simulate.submit(form.getDOMNode());
+             sinon.assert.calledTwice(stubInput);
+             sinon.assert.calledOnce(stubBlockValidate);
+             sinon.assert.calledOnce(stubBlockFocus);
+             stubInput.restore();
+             stubBlockValidate.restore();
+             stubBlockFocus.restore();
+         })
+
+         it('should trigger onClick on Block element ', function () {
+             var MockBlock = Block;
+             var stubBlockOnClick = sinon.stub(MockBlock.type.prototype.__reactAutoBindMap, "onClick");
+             var onClickCallBack = sinon.spy();
+             var Component = React.createClass({
+                 render: function () {
+                     return (
+                         <Form onSubmit={function () {}} ref='foo' name='foo' >
+                            <MockBlock name='block'>
+                                <Input regForm='foo' name='bar1' value='123' onClick={onClickCallBack}/>
+                            </MockBlock>
+                         </Form>
+                     );
+                 }
+             });
+             form = Testlib.renderJSX(
+                 <Component />
+             );
+             TestUtils.Simulate.click(React.findDOMNode(form).childNodes[0].childNodes[0]);
+             sinon.assert.calledOnce(stubBlockOnClick);
+             sinon.assert.calledOnce(onClickCallBack);
+         })
+
+         it('should not prompt error event onClick is not defined', function () {
+             var Component = React.createClass({
+                 render: function () {
+                     return (
+                         <Form onSubmit={function () {}} ref='foo' name='foo' >
+                            <Block name='block'>
+                                <Input regForm='foo' name='bar1' value='123' onClick={undefined}/>
+                            </Block>
+                         </Form>
+                     );
+                 }
+             });
+             form = Testlib.renderJSX(
+                 <Component />
+             );
+             TestUtils.Simulate.click(React.findDOMNode(form).childNodes[0].childNodes[0]);
          })
 
     });

@@ -8,7 +8,7 @@ module.exports = React.createClass({
     render: function () {
         var errorMsg = this.getErrorMsg();
         return (
-            <div style={this.props.style}>
+            <div style={this.props.style} onClick={this.onClick}>
                 {this.props.children}
                 <label style={{color: 'red'}}>{errorMsg}<input ref='focus' style={{opacity: '0'}}/></label>
             </div>
