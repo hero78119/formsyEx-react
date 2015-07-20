@@ -1,6 +1,6 @@
 {
   "name": "formsyex-react",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "description": "form validation library which is modified version based on formsy-react",
   "author": "jonaswu <jonaswu@yahoo-inc.com>",
   "main": "./lib/main.js",
