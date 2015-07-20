@@ -1,3 +1,9 @@
 node_modules/
 static/
 *.log
+.cover*
+coverage
+debug
+dist
+disttest
+reports
