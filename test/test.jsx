@@ -240,6 +240,39 @@ describe ('FormsyEx', function () {
              stubBlockFocus.restore();
          })
 
+         it('should validate form if call validate function directly and focus on first validation error component', function () {
+             var MockInput = Input;
+             var stubInput = sinon.stub(MockInput.type.prototype.__reactAutoBindMap, "validate");
+             var MockBlock = Block;
+             var stubBlockValidate = sinon.stub(MockBlock.type.prototype.__reactAutoBindMap, "validate").returns(false);
+             var stubBlockFocus = sinon.stub(MockBlock.type.prototype.__reactAutoBindMap, "focus");
+             var Component = React.createClass({
+                 render: function () {
+                     return (
+                         <Form onSubmit={function () {}} ref='foo' name='foo' >
+                            <MockBlock name='block'>
+                                <MockInput regForm='foo' name='bar1' value='123'/>
+                            </MockBlock>
+                            <input onClick={function () {
+                                this.refs.foo.validate();
+                            }} />
+                         </Form>
+                     );
+                 }
+             });
+             form = Testlib.renderJSX(
+                 <Component />
+             );
+             TestUtils.Simulate.submit(form.getDOMNode().childNodes[1]);
+             sinon.assert.calledOnce(stubInput);
+             sinon.assert.calledOnce(stubBlockValidate);
+             sinon.assert.calledOnce(stubBlockFocus);
+             stubBlockValidate.restore();
+             stubInput.restore();
+             stubBlockFocus.restore();
+         })
+
+
          it('should trigger onClick on Block element ', function () {
              var MockBlock = Block;
              var stubBlockOnClick = sinon.stub(MockBlock.type.prototype.__reactAutoBindMap, "onClick");
